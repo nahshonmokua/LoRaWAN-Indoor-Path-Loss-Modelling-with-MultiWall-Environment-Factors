@@ -1,0 +1,3 @@
+start_time = '2024-09-26 13:00:00'  # Berlin time
+# end_time = '2024-09-04 10:00:00'  # Berlin time
+end_time = pd.Timestamp.now()  # Current time
