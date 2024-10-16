@@ -67,7 +67,6 @@ Later!
 ---
 
 ## 📝 How to Use This Repository
-## 📝 How to Use This Repository
 1. **Clone the repository**:  
    ```bash
    git clone https://github.com/nahshonmokua/LoRaWAN-Indoor-Path-Loss-Modelling-with-MultiWall-Environment-Factors.git
