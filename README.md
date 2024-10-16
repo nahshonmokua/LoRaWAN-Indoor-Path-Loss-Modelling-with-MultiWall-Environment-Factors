@@ -1,11 +1,10 @@
 # 🛰️ LoRaWAN Indoor Path Loss Modeling with Environmental Factors 📡
 
-Welcome! I'm [Nahshon Obiri](https://nahshonmokua.github.io/), a Research Associate at the [Ubicomp Group](https://ubi29.informatik.uni-siegen.de/usi/) of the [University of Siegen](https://www.uni-siegen.de/). This repository provides data and models for understanding **LoRaWAN signal behavior in indoor environments**, focusing on how factors like humidity, temperature, and CO₂ levels impact path loss and shadowing. Our goal is to optimize indoor LoRaWAN networks for smart IoT applications, enhancing both **signal reliability and network planning**.
+Welcome! I'm <a href="https://nahshonmokua.github.io/" target="_blank">Nahshon Obiri</a>, a Research Associate at the <a href="https://ubi29.informatik.uni-siegen.de/usi/" target="_blank">Ubicomp Group</a> of the <a href="https://www.uni-siegen.de/" target="_blank">University of Siegen</a>. This repository provides data and models for understanding **LoRaWAN signal behavior in indoor environments**, focusing on how factors like humidity, temperature, and CO₂ levels impact path loss and shadowing. Our goal is to optimize indoor LoRaWAN networks for smart IoT applications, enhancing both **signal reliability and network planning**.
 
 <div align="center">
     <img src="design.png" alt="LoRaWAN Indoor Network Deployment Overview" width="70%">
 </div>
-
 
 ---
 
@@ -24,7 +23,7 @@ The dataset includes measurements of:
 - **Signal Characteristics**: RSSI, SNR, Spreading Factor, and Time on Air.
 - **Deployment Conditions**: Distance to the gateway, wall types, and transmitter power.
 
-📥 [**Download the Dataset**](https://github.com/nahshonmokua/LoRaWAN-Indoor-Path-Loss-Modelling-with-MultiWall-Environment-Factors/tree/main)
+📥 <a href="https://github.com/nahshonmokua/LoRaWAN-Indoor-Path-Loss-Modelling-with-MultiWall-Environment-Factors/tree/main" target="_blank"><strong>Download the Dataset</strong></a>
 
 ---
 
@@ -54,15 +53,15 @@ Later!
 ---
 
 ## 🔍 Publications and Talks
-- [A Survey of LoRaWAN-integrated Wearable Sensor Networks for Human Activity Recognition: Applications, Challenges and Possible Solutions](https://www.techrxiv.org/users/838699/articles/1231060-a-survey-of-lorawan-integrated-wearable-sensor-networks-for-human-activity-recognition-applications-challenges-and-possible-solutions)
-- Presented a light talk at the [**ZESS PhD Forum 2024**](https://www.uni-siegen.de/zess/kombibox/zess_phd_forum_2024.html): "LoRaWAN Path Loss Measurements in an Indoor Setting, including Human and Environmental Effects."
+- <a href="https://www.techrxiv.org/users/838699/articles/1231060-a-survey-of-lorawan-integrated-wearable-sensor-networks-for-human-activity-recognition-applications-challenges-and-possible-solutions" target="_blank">A Survey of LoRaWAN-integrated Wearable Sensor Networks for Human Activity Recognition: Applications, Challenges and Possible Solutions</a>
+- Presented a light talk at the <a href="https://www.uni-siegen.de/zess/kombibox/zess_phd_forum_2024.html" target="_blank"><strong>ZESS PhD Forum 2024</strong></a>: "LoRaWAN Path Loss Measurements in an Indoor Setting, including Human and Environmental Effects."
 - Data descriptor and full details available ...later...
 
 ---
 
 ## 🤝 Get Involved
 🚀 **Want to collaborate?** Whether you're an IoT enthusiast, network planner, or researcher, let's connect and explore sustainable tech innovations!  
- Connect on with me!
+Connect with me <a href="https://nahshonmokua.github.io/" target="_blank">here</a>!
 
 ---
 
@@ -70,6 +69,7 @@ Later!
 1. **Clone the repository**:  
    ```bash
    git clone https://github.com/nahshonmokua/LoRaWAN-Indoor-Path-Loss-Modelling-with-MultiWall-Environment-Factors.git
+
 
 2. **Download the dataset** and explore the data.
 3. **Run the analysis scripts** to replicate the model results or modify them for your scenarios.
