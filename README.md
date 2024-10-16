@@ -1,8 +1,8 @@
 # 🛰️ LoRaWAN Indoor Path Loss Modeling with Environmental Factors 📡
 
-Welcome! I'm [Nahshon Obiri](https://nahshonmokua.github.io/), a Research Associate at the [Ubicomp Group](https://ubi29.informatik.uni-siegen.de/usi/) of the [University of Siegen](https://www.uni-siegen.de/). This repository provides data and models for understanding **LoRaWAN signal behavior in indoor environments**, focusing on how factors like humidity, temperature, and CO2 levels impact path loss and shadowing. Our goal is to optimize indoor LoRaWAN networks for smart IoT applications, enhancing both **signal reliability and network planning**.
+Welcome! I'm [Nahshon Obiri](https://nahshonmokua.github.io/), a Research Associate at the [Ubicomp Group](https://ubi29.informatik.uni-siegen.de/usi/) of the [University of Siegen](https://www.uni-siegen.de/). This repository provides data and models for understanding **LoRaWAN signal behavior in indoor environments**, focusing on how factors like humidity, temperature, and CO₂ levels impact path loss and shadowing. Our goal is to optimize indoor LoRaWAN networks for smart IoT applications, enhancing both **signal reliability and network planning**.
 
-![LoRaWAN Indoor Network Deployment Overview](design.png)  
+<img src="design.png" alt="LoRaWAN Indoor Network Deployment Overview" width="50%">
 
 ---
 
@@ -64,9 +64,10 @@ Later!
 ---
 
 ## 📝 How to Use This Repository
+## 📝 How to Use This Repository
 1. **Clone the repository**:  
-   
-git clone https://github.com/nahshonmokua/LoRaWAN-Indoor-Path-Loss-Modelling-with-MultiWall-Environment-Factors.git
+   ```bash
+   git clone https://github.com/nahshonmokua/LoRaWAN-Indoor-Path-Loss-Modelling-with-MultiWall-Environment-Factors.git
 
 2. **Download the dataset** and explore the data.
 3. **Run the analysis scripts** to replicate the model results or modify them for your scenarios.
