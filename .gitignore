@@ -151,8 +151,13 @@ Telegram Alerts Bot/influxdb_reachability.log
 
 # Commonly Reused with confidential Info
 
-#FILES
+#FILES (ALSO PERSONAL NOTES)
 Untitled.ipynb
+To Do List and Research Directions.txt
+
+#FILES WITH PERSONAL NOTES
+To Do List and Research Directions.txt
 
 # Environments in Other Folders
 Telegram Alerts Bot/.env
+
