@@ -1,3 +1,10 @@
+/*
+ * This program reads data from environmental sensors (BME280, SCD4x, SPS30) 
+ * and sends the collected measurements (pressure, CO2, temperature, humidity, PM2.5) 
+ * via LoRaWAN using adaptive data rate. It cycles through data rates after 
+ * a set number of transmissions to optimize network performance.
+ */
+
 #include <MKRWAN.h>
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
@@ -5,25 +12,33 @@
 #include <SensirionI2CScd4x.h>
 #include <sps30.h> 
 
-#define SEALEVELPRESSURE_HPA (1017.95)  // To be adjusted accordingly.
+#define SEALEVELPRESSURE_HPA (1017.95)  // Adjust for local sea-level pressure
 
-Adafruit_BME280 bme;
-SensirionI2CScd4x scd4x;
-LoRaModem modem;
+// Sensor and LoRaWAN declarations
+Adafruit_BME280 bme;               // BME280 environmental sensor
+SensirionI2CScd4x scd4x;           // SCD4x CO2 sensor
+LoRaModem modem;                   // LoRaWAN modem
 
-int16_t ret;
-uint8_t auto_clean_days = 4; // Interval for auto-cleaning in days
-struct sps30_measurement m; // Struct to hold measurement data
-uint16_t data_ready; // Variable to check if data is ready
+int16_t ret;                       // Return value for SPS30 operations
+uint8_t auto_clean_days = 4;       // Auto-cleaning interval for SPS30 fan
+struct sps30_measurement m;        // SPS30 measurement struct
+uint16_t data_ready;               // SPS30 data ready flag
 
-// OTAA Credentials using String type as preferred
-String appEui = "xxxxxxxxxxxx";  // Application EUI
+// LoRaWAN OTAA credentials
+String appEui = "xxxxxxxxxxxx";     // Application EUI
 String appKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";  // Application Key
 
-int currentDR = 0;  // Start with Data Rate 0
-int transmissionCount = 0;  // Count the number of transmissions with the current DR
-unsigned long packetsSent = 0;  // Track the number of packets sent (using unsigned long for larger count)
+// Data rate (DR) and transmission tracking
+int currentDR = 0;                 // Initial LoRaWAN data rate
+int transmissionCount = 0;         // Count transmissions at current DR
+unsigned long packetsSent = 0;     // Total packets sent
 
+/*
+ * setup()
+ * Initializes I2C communication, sensors (BME280, SCD4x, SPS30), 
+ * and LoRaWAN modem. It sets sensor auto-clean intervals, 
+ * starts measurements, and joins the LoRaWAN network using OTAA.
+ */
 void setup() {
     Wire.begin();
 
@@ -66,8 +81,14 @@ void setup() {
     modem.setADR(true);  // Enable Adaptive Data Rate
 }
 
+/*
+ * sendPacket()
+ * Prepares and sends a data packet via LoRaWAN. 
+ * It encodes sensor readings and the packet count into 
+ * a payload, sends the packet, and adjusts the data rate 
+ * after a fixed number of transmissions.
+ */
 void sendPacket(float pressure, uint16_t co2, float temperature, float humidity, float pm25, unsigned long packetCount) {
-    // Set the current Data Rate (DR)
     modem.dataRate(currentDR);
 
     // Constructing the payload
@@ -95,10 +116,9 @@ void sendPacket(float pressure, uint16_t co2, float temperature, float humidity,
     modem.write(payload, sizeof(payload));
     int err = modem.endPacket(true);
 
-    // Increment the transmission count
+    // Increment the transmission count and adjust data rate if needed
     transmissionCount++;
     if (transmissionCount >= 5) {
-        // If 5 transmissions have been done with the current DR, move to the next DR
         transmissionCount = 0;
         currentDR++;
         if (currentDR > 5) {
@@ -107,10 +127,17 @@ void sendPacket(float pressure, uint16_t co2, float temperature, float humidity,
     }
 }
 
+/*
+ * loop()
+ * Continuously reads sensor data from BME280, SCD4x, and SPS30, 
+ * then packages and sends the data via LoRaWAN. 
+ * Delays one minute between transmissions.
+ */
 void loop() {
     // Read pressure from BME280 sensor
     float pressure = bme.readPressure() / 100.0F;
 
+    // Read CO2, temperature, and humidity from SCD4x
     uint16_t co2 = 0;
     float temperature = 0.0f;
     float humidity = 0.0f;

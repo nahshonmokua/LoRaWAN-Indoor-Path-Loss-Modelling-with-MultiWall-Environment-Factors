@@ -1,3 +1,12 @@
+"""
+MQTTInfluxBridge
+
+This script bridges MQTT messages to an InfluxDB database. It subscribes to a specified MQTT topic,
+listens for incoming JSON payloads, flattens nested JSON data, converts data types as needed,
+and writes the processed data points to InfluxDB. The script includes automatic reconnection
+to the MQTT broker on disconnect and handles dynamic database creation in InfluxDB.
+"""
+
 import paho.mqtt.client as mqtt
 from influxdb import InfluxDBClient
 import json
@@ -15,8 +24,12 @@ INFLUXDB_HOST = "xxxx"
 INFLUXDB_PORT = xxxx
 INFLUXDB_DATABASE = "xxxxx"
 
-# Callback for MQTT message
 def on_message(client, userdata, message):
+    """
+    Callback triggered on receiving an MQTT message.
+    Decodes the payload, extracts device ID and parameters,
+    then writes the data to InfluxDB.
+    """
     payload = message.payload.decode('utf-8')
     topic = message.topic
     print("Received message:", payload)
@@ -26,22 +39,30 @@ def on_message(client, userdata, message):
         decoded_data["device_id"] = device_id  # Include device ID in data
         write_to_influxdb(decoded_data)
 
-# Function to extract device ID from the MQTT topic
 def extract_device_id(topic):
+    """
+    Extracts the device ID from the MQTT topic.
+    Assumes the device ID is located at the 5th segment of the topic.
+    """
     parts = topic.split('/')
     return parts[4]  # Device ID should be the 5th part of the topic
 
-# Function to extract parameters from payload
 def extract_parameters(payload):
+    """
+    Converts a JSON payload into a flattened dictionary.
+    Recursively flattens nested dictionaries/lists and ensures
+    data types are compatible with InfluxDB.
+    """
     try:
         payload_json = json.loads(payload)
 
         def flatten_json(json_obj, parent_key='', sep='_'):
+            """
+            Recursively flattens a nested JSON object into a single-level dictionary.
+            """
             items = {}
             for k, v in json_obj.items():
-                new_key = f"{parent_key}{sep}{k}".replace('-', '_').replace('.', '_') if parent_key else k.replace('-',
-                                                                                                                   '_').replace(
-                    '.', '_')
+                new_key = f"{parent_key}{sep}{k}".replace('-', '_').replace('.', '_') if parent_key else k.replace('-', '_').replace('.', '_')
                 if isinstance(v, dict):
                     items.update(flatten_json(v, new_key, sep=sep))
                 elif isinstance(v, list):
@@ -68,8 +89,11 @@ def extract_parameters(payload):
         print("Error extracting parameters from payload:", e)
         return None
 
-# Function to write data to InfluxDB
 def write_to_influxdb(data):
+    """
+    Writes the given data as a point to the specified InfluxDB database.
+    Creates the database if it does not exist.
+    """
     client = InfluxDBClient(host=INFLUXDB_HOST, port=INFLUXDB_PORT)
     databases = client.get_list_database()
     if {"name": INFLUXDB_DATABASE} not in databases:
@@ -83,8 +107,11 @@ def write_to_influxdb(data):
     ]
     client.write_points(json_body)
 
-# Function to connect to MQTT broker with retry mechanism
 def connect_mqtt():
+    """
+    Attempts to connect to the MQTT broker.
+    Retries connection every 5 seconds upon failure.
+    """
     while True:
         try:
             mqtt_client.connect(MQTT_BROKER, MQTT_PORT, 60)

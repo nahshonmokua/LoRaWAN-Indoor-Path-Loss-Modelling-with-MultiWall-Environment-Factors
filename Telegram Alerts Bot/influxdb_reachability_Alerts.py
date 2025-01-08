@@ -1,8 +1,16 @@
+"""
+InfluxDB Reachability Monitor
+
+This script checks the reachability of an InfluxDB server by sending a ping request.
+If the server is unreachable, it sends an alert message via Telegram. The script
+logs all events and errors for monitoring purposes. It uses environment variables
+for configuration and is designed to be run periodically or as a scheduled task.
+"""
+
 import os
 import requests
 import pandas as pd
 import logging
-from datetime import datetime
 from dotenv import load_dotenv
 
 # Load environment variables from .env file

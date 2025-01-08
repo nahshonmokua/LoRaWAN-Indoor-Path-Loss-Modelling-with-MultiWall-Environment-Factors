@@ -1,3 +1,12 @@
+"""
+InfluxDB Device Monitor
+
+This script monitors data logging for devices stored in an InfluxDB database.
+It retrieves unique device IDs, checks the most recent log time for each device,
+and sends Telegram alerts if any device hasn't logged data for over 10 minutes.
+The script uses environment variables for configuration and logs its operations.
+"""
+
 import os
 import requests
 from influxdb import InfluxDBClient
@@ -19,7 +28,7 @@ logging.basicConfig(
 
 # InfluxDB connection parameters
 INFLUXDB_HOST = os.getenv('INFLUXDB_HOST')  # IP address of the InfluxDB server
-INFLUXDB_PORT = int(os.getenv('INFLUXDB_PORT', 8086))  # Port where InfluxDB is listening, default to 8086
+INFLUXDB_PORT = int(os.getenv('INFLUXDB_PORT', 8086))  # Port where InfluxDB is listening
 INFLUXDB_DATABASE = os.getenv('INFLUXDB_DATABASE')  # Name of the InfluxDB database
 INFLUXDB_MEASUREMENT = os.getenv('INFLUXDB_MEASUREMENT')  # Measurement/table within the database
 
@@ -28,9 +37,9 @@ TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')  # Telegram bot token for a
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')  # Telegram chat ID to send alerts
 TELEGRAM_URL = f'https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage'  # Telegram API URL for sending messages
 
-# Device name mapping
+# Device name mapping for alerts
 device_name_map = {
-    'pilotdevice'  : 'ED0',
+    'pilotdevice': 'ED0',
     'pilotdevice01': 'ED1',
     'pilotdevice02': 'ED2',
     'pilotdevice03': 'ED3',
@@ -38,9 +47,13 @@ device_name_map = {
     'pilotdevice05': 'ED5'
 }
 
+
 def send_telegram_alert(message: str):
     """
     Sends an alert message to a Telegram chat.
+
+    Parameters:
+    - message (str): The alert message to be sent.
     """
     params = {'chat_id': TELEGRAM_CHAT_ID, 'text': message}
     try:
@@ -50,9 +63,16 @@ def send_telegram_alert(message: str):
     except requests.exceptions.RequestException as e:
         logging.error(f"Failed to send Telegram alert. Error: {e}")
 
+
 def query_unique_device_ids(client: InfluxDBClient) -> set:
     """
     Queries InfluxDB to get the unique device IDs from the data.
+
+    Parameters:
+    - client (InfluxDBClient): The InfluxDB client instance.
+
+    Returns:
+    - set: A set of unique device IDs.
     """
     try:
         query = f'SELECT DISTINCT("end_device_ids_device_id") FROM {INFLUXDB_MEASUREMENT}'
@@ -63,9 +83,17 @@ def query_unique_device_ids(client: InfluxDBClient) -> set:
         logging.error(f"Error querying unique device IDs: {e}")
         return set()
 
+
 def query_influxdb_for_device(client: InfluxDBClient, device_id: str) -> pd.DataFrame:
     """
     Queries InfluxDB to get the last logged data point for a specific device.
+
+    Parameters:
+    - client (InfluxDBClient): The InfluxDB client instance.
+    - device_id (str): The ID of the device to query.
+
+    Returns:
+    - DataFrame: A Pandas DataFrame containing the last log time and device ID.
     """
     try:
         query = (
@@ -81,29 +109,31 @@ def query_influxdb_for_device(client: InfluxDBClient, device_id: str) -> pd.Data
         logging.error(f"Error querying data for device '{device_id}': {e}")
         return pd.DataFrame()
 
+
 def check_and_alert_for_device(client: InfluxDBClient, device_id: str):
     """
-    Checks the last log time for a device and sends an alert if it exceeds 5 minutes.
+    Checks the last log time for a device and sends an alert if it exceeds 10 minutes.
+
+    Parameters:
+    - client (InfluxDBClient): The InfluxDB client instance.
+    - device_id (str): The ID of the device to check.
     """
     df = query_influxdb_for_device(client, device_id)
     if not df.empty:
         last_time_utc = pd.to_datetime(df['time'].iloc[0])
         last_time_berlin = last_time_utc.tz_convert('Europe/Berlin')
 
-        # Calculate the time difference
+        # Calculate the time difference since the last log
         time_diff = datetime.now(last_time_berlin.tzinfo) - last_time_berlin
 
-        # Check if the time difference is more than 5 minutes
+        # Check if the time difference is more than 10 minutes
         if time_diff > timedelta(minutes=10):
-            # Calculate the exact time difference in hours and minutes
             total_seconds = int(time_diff.total_seconds())
             hours, remainder = divmod(total_seconds, 3600)
             minutes = (remainder // 60) % 60
 
-            # Map the device ID to the desired name
             mapped_device_id = device_name_map.get(device_id, device_id)
 
-            # Prepare the alert message with the exact time difference in hours and minutes
             alert_message = (
                 f"ALERT: Device '{mapped_device_id}' has not logged data for over 10 minutes! "
                 f"Last log at: {last_time_berlin}. It has been "
@@ -112,19 +142,19 @@ def check_and_alert_for_device(client: InfluxDBClient, device_id: str):
             send_telegram_alert(alert_message)
             logging.warning(alert_message)
     else:
-        # Map the device ID to the desired name
         mapped_device_id = device_name_map.get(device_id, device_id)
         logging.warning(f"No data found for Device ID '{mapped_device_id}'.")
+
 
 def fetch_last_logged_time():
     """
     Fetches the last logged time of data for each unique device from InfluxDB.
+    For each device, checks if an alert needs to be sent based on log recency.
     """
     try:
         client = InfluxDBClient(host=INFLUXDB_HOST, port=INFLUXDB_PORT)
         client.switch_database(INFLUXDB_DATABASE)
 
-        # Get the unique device IDs dynamically from the data
         unique_device_ids = query_unique_device_ids(client)
         if not unique_device_ids:
             logging.error("No unique device IDs found.")
@@ -137,13 +167,16 @@ def fetch_last_logged_time():
         logging.error(f"Error fetching last logged time from InfluxDB: {e}")
         send_telegram_alert("ALERT: Error occurred while fetching data from InfluxDB.")
 
+
 def main():
     """
     Main function to run the InfluxDB monitor.
+    It initializes monitoring by fetching the last logged times for all devices.
     """
     logging.info("Starting InfluxDB monitor.")
     fetch_last_logged_time()
     logging.info("InfluxDB monitor run completed.")
+
 
 if __name__ == "__main__":
     main()

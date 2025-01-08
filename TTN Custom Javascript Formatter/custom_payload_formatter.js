@@ -1,3 +1,17 @@
+/*
+ * Decoder Function for Sensor Data Payload
+ *
+ * This function decodes sensor data from a byte array payload received on a specific port.
+ * It extracts and converts sensor values such as pressure, CO2 concentration, temperature,
+ * humidity, and PM2.5 concentration, as well as a packet count for tracking message sequence.
+ *
+ * Parameters:
+ * - bytes (Array): Array of bytes representing the sensor data payload.
+ * - port (Number): The port number on which the payload was received (unused in this decoder).
+ *
+ * Returns:
+ * - Object: An object containing the decoded sensor values and packet count.
+ */
 function Decoder(bytes, port) {
     // Decode sensor data from payload
 
@@ -20,11 +34,11 @@ function Decoder(bytes, port) {
 
     // Create an object to store the decoded sensor data
     var decoded = {
-        pressure: pressure,         // Atmospheric pressure
-        co2: co2,                   // CO2 concentration
-        temperature: temperature,   // Temperature reading
-        humidity: humidity,         // Humidity percentage
-        pm25: pm25,                 // Particulate Matter (PM2.5) value
+        pressure: pressure,         // Atmospheric pressure in hPa
+        co2: co2,                   // CO2 concentration in ppm
+        temperature: temperature,   // Temperature in °C
+        humidity: humidity,         // Relative humidity in %
+        pm25: pm25,                 // PM2.5 concentration in µg/m³
         packetCount: packetCount    // Packet count to track message sequence
     };
 
