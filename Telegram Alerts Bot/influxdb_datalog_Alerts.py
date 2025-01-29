@@ -44,7 +44,8 @@ device_name_map = {
     'pilotdevice02': 'ED2',
     'pilotdevice03': 'ED3',
     'pilotdevice04': 'ED4',
-    'pilotdevice05': 'ED5'
+    'pilotdevice05': 'ED5',
+    'pilotdevice06': 'ED7'    # Added pilotdevice06 with ED7
 }
 
 
@@ -159,6 +160,8 @@ def fetch_last_logged_time():
         if not unique_device_ids:
             logging.error("No unique device IDs found.")
             return
+
+        unique_device_ids.discard('pilotdevice06')  # pilotdevice06 is not being monitored currently
 
         for device_id in unique_device_ids:
             check_and_alert_for_device(client, device_id)
