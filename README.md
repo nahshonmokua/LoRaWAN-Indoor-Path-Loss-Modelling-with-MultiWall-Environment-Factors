@@ -50,7 +50,7 @@ Nahshon Mokua Obiri and Kristof Van Laerhoven, [“A Comprehensive Data Descript
 ---
 
 ## 🔍 Other Publications and Talks
-- <a href="https://www.techrxiv.org/users/838699/articles/1231060-a-survey-of-lorawan-integrated-wearable-sensor-networks-for-human-activity-recognition-applications-challenges-and-possible-solutions" target="_blank">A Survey of LoRaWAN-integrated Wearable Sensor Networks for Human Activity Recognition: Applications, Challenges and Possible Solutions</a>
+- <a href="https://doi.org/10.1109/OJCOMS.2024.3484002" target="_blank">A Survey of LoRaWAN-integrated Wearable Sensor Networks for Human Activity Recognition: Applications, Challenges and Possible Solutions</a>
 - Presented a light talk at the <a href="https://www.uni-siegen.de/zess/kombibox/zess_phd_forum_2024.html" target="_blank"><strong>ZESS PhD Forum 2024</strong></a>: "LoRaWAN Path Loss Measurements in an Indoor Setting, including Human and Environmental Effects."
 
 ---
