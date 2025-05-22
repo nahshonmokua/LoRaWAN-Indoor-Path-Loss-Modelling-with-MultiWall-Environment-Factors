@@ -1,9 +1,9 @@
 # 🛰️ LoRaWAN Indoor Path Loss Modeling with Environmental Factors 📡
 
-Welcome! I'm <a href="https://nahshonmokua.github.io/" target="_blank">Nahshon Obiri</a>, a Research Associate at the <a href="https://ubi29.informatik.uni-siegen.de/usi/" target="_blank">Ubicomp Group</a> of the <a href="https://www.uni-siegen.de/" target="_blank">University of Siegen</a>. This repository provides data and models for understanding **LoRaWAN signal behavior in indoor environments**, focusing on how factors like humidity, temperature, and CO₂ levels impact path loss and shadowing. Our goal is to optimize indoor LoRaWAN networks for smart IoT applications, enhancing both **signal reliability and network planning**.
+This repository provides data and models for understanding **LoRaWAN signal behavior in indoor environments**, focusing on how factors like relative humidity, temperature, particulate matter, barometric pressure and CO₂ levels impact path loss and shadowing. The main goal is to optimize indoor LoRaWAN networks for smart IoT applications, enhancing both **signal reliability and network planning**.
 
 <div align="center">
-    <img src="design.png" alt="LoRaWAN Indoor Network Deployment Overview" width="70%">
+    <img src="sensor network design.png" alt="LoRaWAN Indoor Network Deployment Overview" width="70%">
 </div>
 
 ---
@@ -23,8 +23,6 @@ The dataset includes measurements of:
 - **Signal Characteristics**: RSSI, SNR, Spreading Factor, and Time on Air.
 - **Deployment Conditions**: Distance to the gateway, wall types, and transmitter power.
 
-📥 <a href="https://github.com/nahshonmokua/LoRaWAN-Indoor-Path-Loss-Modelling-with-MultiWall-Environment-Factors/tree/main" target="_blank"><strong>Download the Dataset</strong></a>
-
 ---
 
 ## 🛠️ Methodology
@@ -38,30 +36,28 @@ The dataset includes measurements of:
    - **LDPLM-MW-EP**: Enhances the baseline model by integrating **dynamic environmental factors** to account for real-time variations, significantly improving prediction accuracy in fluctuating conditions.
 
 ### 3. **Data Analysis**
-   - Models are trained and validated using the dataset, with performance metrics such as **Root Mean Square Error (RMSE)** and **R-squared** to evaluate accuracy. 
+   - Models are trained and validated using the dataset, with performance metrics such as **Root Mean Square Error (RMSE)** and **R²** to evaluate accuracy. 
    - Comparative analysis between LDPLM-MW and LDPLM-MW-EP is performed to demonstrate the improvement.
 
 ---
 
 ## 📈 Results
-- **Improved Accuracy with LDPLM-MW-EP**: The enhanced model outperforms the standard one, especially in scenarios with significant environmental variability.
-- **Environmental Factors Matter**: Variables like **humidity and CO₂** notably impact signal strength, suggesting that **dynamic model adjustments** are crucial for robust indoor LoRaWAN networks.
+The results of this work have been primarily published in:
 
-### Visual Insights
-Later!
+Nahshon Mokua Obiri and Kristof Van Laerhoven, [“A Comprehensive Data Description for LoRaWAN Path Loss Measurements in an Indoor Office Setting: Effects of Environmental Factors”](https://doi.org/10.1109/ACCESS.2025.3569164), *IEEE Access*, vol. 13, pp. 83148–83170, 2025.
+
+
 
 ---
 
-## 🔍 Publications and Talks
+## 🔍 Other Publications and Talks
 - <a href="https://www.techrxiv.org/users/838699/articles/1231060-a-survey-of-lorawan-integrated-wearable-sensor-networks-for-human-activity-recognition-applications-challenges-and-possible-solutions" target="_blank">A Survey of LoRaWAN-integrated Wearable Sensor Networks for Human Activity Recognition: Applications, Challenges and Possible Solutions</a>
 - Presented a light talk at the <a href="https://www.uni-siegen.de/zess/kombibox/zess_phd_forum_2024.html" target="_blank"><strong>ZESS PhD Forum 2024</strong></a>: "LoRaWAN Path Loss Measurements in an Indoor Setting, including Human and Environmental Effects."
-- Data descriptor and full details available ...later...
 
 ---
 
 ## 🤝 Get Involved
-🚀 **Want to collaborate?** Whether you're an IoT enthusiast, network planner, or researcher, let's connect and explore sustainable tech innovations!  
-Connect with me <a href="https://nahshonmokua.github.io/" target="_blank">here</a>!
+🚀 **Want to collaborate?** Whether you're an IoT enthusiast, network planner, or researcher, let's connect and explore sustainable tech innovations! Connect with me <a href="https://nahshonmokua.github.io/" target="_blank">here</a>!
 
 ---
 
@@ -78,6 +74,6 @@ Connect with me <a href="https://nahshonmokua.github.io/" target="_blank">here</
 ---
 
 ## 📜 License
-⚠️ *This project does not have a license. Contributions are welcome, but please contact me for permission if you intend to use it commercially.*
+© 2025 Nahshon Mokua Obiri and Kristof Van Laerhoven. This dataset is licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0).
 
 ---
