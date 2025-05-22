@@ -7,7 +7,6 @@ This repository provides data and models for understanding **LoRaWAN signal beha
 </div>
 
 ---
-
 ## 🌐 Project Overview
 Indoor environments present unique challenges for **LoRaWAN network performance** due to various obstacles such as walls, human activity, and environmental changes. This project provides a detailed dataset and proposes two models for predicting **path loss**:
 1. **Log-Distance Path Loss Model with Multi-Wall (LDPLM-MW)**: Incorporates structural obstacles like walls for predicting signal degradation.
@@ -36,7 +35,7 @@ The dataset includes measurements of:
    - **LDPLM-MW-EP**: Enhances the baseline model by integrating **dynamic environmental factors** to account for real-time variations, significantly improving prediction accuracy in fluctuating conditions.
 
 ### 3. **Data Analysis**
-   - Models are trained and validated using the dataset, with performance metrics such as **Root Mean Square Error (RMSE)** and **R²** to evaluate accuracy. 
+   - Models are trained and validated using the dataset, with performance metrics such as **RMSE)** and **R²** to evaluate accuracy. 
    - Comparative analysis between LDPLM-MW and LDPLM-MW-EP is performed to demonstrate the improvement.
 
 ---
@@ -64,9 +63,7 @@ Nahshon Mokua Obiri and Kristof Van Laerhoven, [“A Comprehensive Data Descript
 ## 📝 How to Use This Repository
 1. **Clone the repository**:  
    ```bash
-   git clone https://github.com/nahshonmokua/LoRaWAN-Indoor-Path-Loss-Modelling-with-MultiWall-Environment-Factors.git
-
-
+   git clone https://github.com/nahshonmokua/LoRaWAN-Indoor-PathLoss-Dataset-IEEEACCESS.git
 2. **Download the dataset** and explore the data.
 3. **Run the analysis scripts** to replicate the model results or modify them for your scenarios.
 4. **Contribute**: Submit pull requests to suggest improvements or new features.
